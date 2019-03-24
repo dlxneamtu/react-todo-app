@@ -1,11 +1,12 @@
 import React from 'react';
-import InputWrapper from './InputWrapper';
+import InputBox from './InputBox';
 
 export default function Header(props) {
+    const {addNew} = props;
     return (
         <header>
             <h1>Things To Do</h1>
-            <InputWrapper {...props}/>
+            <InputBox {...{addNew}}/>
         </header>
     );
 }

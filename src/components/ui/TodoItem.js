@@ -1,5 +1,6 @@
 import React from 'react';
 import CheckBox from './CheckBox';
+import changeStatus from '../wrappers/StateProvider';
 
 export default function TodoItem(props) {
     const {data, changeStatus} = props;
