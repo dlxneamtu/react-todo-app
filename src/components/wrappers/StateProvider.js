@@ -1,33 +1,69 @@
 import React, {Component} from 'react';
 import {objectWithOnly, wrapChildrenWith} from '../../util/common';
-import {getAll, addToList, updateStatus} from '../../services/todo';
+import {getAll, addToList, updateStatus, deleteItemService} from '../../services/todo';
 
 class StateProvider extends Component {
     constructor() {
         super();
         this.state = {
-            query: '',
-            list: getAll()
+            list : []
         }
+    }
+    
+    componentDidMount(){
+        let resp = getAll()
+        resp.then(response => response.json())
+            .then(data => {  
+                console.log("Final data ", data)
+                this.setState({list : data})
+                    
+            })
+        // Catch any errors we hit and update the app
+        .catch(error => this.setState({ error, isLoading: false }));
     }
 
     render() {
         let children = wrapChildrenWith(this.props.children, {
             data: this.state,
-            actions: objectWithOnly(this, ['addNew', 'changeStatus'])
+            actions: objectWithOnly(this, ['addNew', 'changeStatus', 'deleteItem'])
         });
 
         return <div>{children}</div>;
     }
 
     addNew(text) {
-        let updatedList = addToList(this.state.list, {text, completed: false});
-        this.setState({list: updatedList});
+        let response = addToList(this.state.list, {text, completed: false});
+        response.then(response => response.json())
+            .then(data => {  
+                console.log(data)
+                let updatedList = [...this.state.list, ...data]
+                this.setState({list: updatedList});
+                    
+            })
+        // Catch any errors we hit and update the app
+        .catch(error => this.setState({ error, isLoading: false }));
+        
+        
     }
 
     changeStatus(itemId, completed) {
-        const updatedList = updateStatus(this.state.list, itemId, completed);
-        this.setState({list: updatedList});
+        let response = updateStatus(itemId, completed);
+        response.then(response => response.json())
+            .then(data => {  
+                let updatedList = [...this.state.list, ...data]
+                this.setState({list: updatedList});
+                    
+            })
+    }
+
+    deleteItem(itemId) {
+        let response = deleteItemService(itemId);
+        response.then(response => response.json())
+            .then(data => {  
+                let updatedList = data
+                this.setState({list: updatedList});
+                    
+            })
     }
 }
 

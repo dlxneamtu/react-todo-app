@@ -3,7 +3,6 @@ import enhance from '../hoc/wrapInputBox';
 
 function InputBox(props) {
     const { value, handleChange, handleKeyUp } = props;
-
     return (
         <input autoFocus
             type="text"
