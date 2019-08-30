@@ -42,12 +42,6 @@ const service = {
 export function getAll() {
     let data = []
     return service.get(BASE_URL + `/todo`, { data: {} })
-    .then(response => {
-        return response
-    })
-    // Catch any errors we hit and update the app
-    .catch(error => this.setState({ error, isLoading: false }));
-    
 }
 
 export function getItemById(itemId) {
