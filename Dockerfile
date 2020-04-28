@@ -10,8 +10,6 @@ ENV https_proxy http://proxy-wsa.esl.cisco.com:80
 
 COPY package.json package-lock.json ./
 
-#npm config set proxy http:proxy-wsa.esl.cisco.com:80
-#npm config set https-proxy http:proxy-wsa.esl.cisco.com:80
 RUN npm install
 
 COPY . ./

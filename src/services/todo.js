@@ -1,6 +1,6 @@
 import update from 'immutability-helper';
 let PORT = 8888
-let BASE_URL = "http://127.0.0.1:" + PORT
+let BASE_URL = "http://10.62.157.181:" + PORT
 let headers = {
     "content-type": "application/json",
     "accept":"*/*"
